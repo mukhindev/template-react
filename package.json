@@ -1,0 +1,38 @@
+{
+  "name": "nocra",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run jest && npm run tsc && npm run lint && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.ts,.tsx && tsc",
+    "tsc": "tsc",
+    "test": "jest --passWithNoTests"
+  },
+  "aliases": {
+    "@": "src"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.6",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "@vitejs/plugin-react": "^2.0.0",
+    "eslint": "^8.21.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.30.1",
+    "jest": "^28.1.2",
+    "prettier": "2.7.1",
+    "ts-jest": "^28.0.7",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.0",
+    "vite-plugin-svgr": "^2.2.1"
+  }
+}
