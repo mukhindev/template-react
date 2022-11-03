@@ -1,11 +1,11 @@
 {
   "name": "nocra",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run jest && npm run tsc && npm run lint && vite build",
+    "build": "npm run test && npm run tsc && npm run lint && vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext .js,.ts,.tsx && tsc",
     "tsc": "tsc",
