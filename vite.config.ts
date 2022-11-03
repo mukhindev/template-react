@@ -5,6 +5,9 @@ import path from "path";
 
 const { aliases } = require("./package.json");
 
+const REQUIRED_ENV_VARIABLES: string[] = [];
+const ENV_VARIABLES: string[] = ["API_HOST"];
+
 const prepareAliases = (aliasesObj) => {
   return Object.entries(aliasesObj).reduce((acc, [alias, replacement]) => {
     acc[alias] = path.resolve(__dirname, replacement.toString());
@@ -21,12 +24,20 @@ const prepareDefine = (env: Record<string, string>) => {
   }, {} as Record<string, string>);
 };
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), ["API_HOST"]);
+const getRequiredEnvVariableNotFoundMessage = (name: string): string =>
+  `🔥 Env variable "${name}" is required`;
 
-  // if (!env.API_HOST) {
-  //   throw new Error("🔥 Environment variable API_HOST is required");
-  // }
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), [
+    ...REQUIRED_ENV_VARIABLES,
+    ...ENV_VARIABLES,
+  ]);
+
+  for (const variable of REQUIRED_ENV_VARIABLES) {
+    if (!env[variable]) {
+      throw new Error(getRequiredEnvVariableNotFoundMessage(variable));
+    }
+  }
 
   return {
     // vite config
