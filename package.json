@@ -1,7 +1,7 @@
 {
   "name": "nocra",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,9 +10,6 @@
     "lint": "eslint src --ext .js,.ts,.tsx && tsc",
     "tsc": "tsc",
     "test": "jest --passWithNoTests"
-  },
-  "aliases": {
-    "@": "src"
   },
   "dependencies": {
     "react": "^18.2.0",

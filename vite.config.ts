@@ -3,9 +3,12 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import path from "path";
 
-const { aliases } = require("./package.json");
+const ALIAS = {
+  "@": "src",
+};
 
 const REQUIRED_ENV_VARIABLES: string[] = [];
+
 const ENV_VARIABLES: string[] = ["API_HOST"];
 
 const prepareAliases = (aliasesObj) => {
@@ -49,7 +52,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [svgr(), react()],
     resolve: {
-      alias: prepareAliases(aliases),
+      alias: prepareAliases(ALIAS),
     },
   };
 });
