@@ -1,10 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
+import App from "@/App";
+import "./main.scss";
 
-import App from "@/components/App";
+const rootElement = document.getElementById("root");
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+if (!rootElement) {
+  throw Error("Root element not found in DOM");
+}
+
+const root = createRoot(rootElement);
+
+root.render(<App />);

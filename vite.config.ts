@@ -3,15 +3,12 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import path from "path";
 
-const ALIAS = {
-  "@": "src",
-};
-
+const PORT = 3000;
+const ALIAS = { "@": "src" };
 const REQUIRED_ENV_VARIABLES: string[] = [];
-
 const ENV_VARIABLES: string[] = ["API_HOST"];
 
-const prepareAliases = (aliasesObj) => {
+export const prepareAliases = (aliasesObj) => {
   return Object.entries(aliasesObj).reduce((acc, [alias, replacement]) => {
     acc[alias] = path.resolve(__dirname, replacement.toString());
 
@@ -30,7 +27,9 @@ const prepareDefine = (env: Record<string, string>) => {
 const getRequiredEnvVariableNotFoundMessage = (name: string): string =>
   `🔥 Env variable "${name}" is required`;
 
-export default defineConfig(({ mode }) => {
+export default defineConfig((config) => {
+  const { mode } = config;
+
   const env = loadEnv(mode, process.cwd(), [
     ...REQUIRED_ENV_VARIABLES,
     ...ENV_VARIABLES,
@@ -43,16 +42,13 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    // vite config
-    server: {
-      port: 3000,
-    },
-    define: {
-      ...prepareDefine(env),
-    },
+    server: { port: PORT },
+    define: prepareDefine(env),
     plugins: [svgr(), react()],
-    resolve: {
-      alias: prepareAliases(ALIAS),
+    resolve: { alias: prepareAliases(ALIAS) },
+    test: {
+      globals: true,
+      environment: "jsdom",
     },
   };
 });

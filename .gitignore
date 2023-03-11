@@ -1,24 +1,28 @@
-# Logs
-logs
-*.log
+# system
+.DS_Store
+Thumbs.db
+
+# editors
+/.vscode
+/.idea
+/.fleet
+
+# dependencies
+/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+/.pnp
+.pnp.js
 
-node_modules
-dist
-dist-ssr
-*.local
+# caches
+.eslintcache
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# secrets
+.env
+
+# testing
+/coverage
+
+# building
+/dist
