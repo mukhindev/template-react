@@ -1,14 +1,14 @@
 {
-  "name": "notcra",
+  "name": "template-react",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vitest run && tsc && eslint src && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint src",
-    "tsc": "tsc",
+    "typecheck": "tsc",
     "test": "vitest"
   },
   "dependencies": {

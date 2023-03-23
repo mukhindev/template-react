@@ -1,6 +1,6 @@
-# notcra
+# template-react
 
-My minimal starter boilerplate for React App with
+Starter template for [React](https://react.dev/) App with
 [TypeScript](https://www.typescriptlang.org/),
 [Vite](https://vitejs.dev/),
 [Vitest](https://vitest.dev/),
