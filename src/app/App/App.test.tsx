@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MODE } from "@/constants";
+import { MODE } from "~/shared/constants";
 import App from "./App";
 
 describe("<App> test", () => {
