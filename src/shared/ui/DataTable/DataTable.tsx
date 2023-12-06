@@ -1,6 +1,9 @@
+import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ColumnDef } from "./types";
+import styles from "./DataTable.module.scss";
+import { clsx } from "clsx";
 
-interface DataTableProps<T> {
+interface DataTableProps<T> extends HTMLAttributes<HTMLDivElement> {
   /** Определение колонок таблицы */
   defs: ColumnDef<T>[];
   /** Массив данных для вывода. Каждый элемент — строка */
@@ -8,26 +11,42 @@ interface DataTableProps<T> {
 }
 
 /** Генерация таблицы из данных */
-export default function DataTable<T>(props: DataTableProps<T>) {
-  if (!props.data || !props.defs) {
+export default forwardRef(function DataTable<T>(
+  props: DataTableProps<T>,
+  ref: ForwardedRef<HTMLDivElement>,
+) {
+  const {
+    data = [],
+    defs = [],
+    "data-component": dataComponent,
+    className,
+    ...divProps
+  } = props;
+
+  if (!data || !defs) {
     return null;
   }
 
   return (
-    <div data-component="DataTable">
-      <table>
+    <div
+      data-component={!dataComponent ? "Table" : `Table/${dataComponent}`}
+      className={clsx(styles.DataTable, className)}
+      ref={ref}
+      {...divProps}
+    >
+      <table className={styles.DataTableTable}>
         <thead>
           <tr>
-            {props.defs.map((def, defIndex) => {
+            {defs.map((def, defIndex) => {
               return <DataTableHeadCell key={defIndex} def={def} />;
             })}
           </tr>
         </thead>
         <tbody>
-          {props.data.map((item, dataIndex) => {
+          {data.map((item, dataIndex) => {
             return (
               <tr key={dataIndex}>
-                {props.defs.map((def, defIndex) => {
+                {defs.map((def, defIndex) => {
                   return (
                     <DataTableBodyCell
                       key={defIndex}
@@ -44,23 +63,29 @@ export default function DataTable<T>(props: DataTableProps<T>) {
       </table>
     </div>
   );
-}
+});
 
-interface DataTableHeadCellProps<T> {
+interface DataTableHeadCellProps<T>
+  extends HTMLAttributes<HTMLTableCellElement> {
   /** Определение колонки (свойства колонки) */
   def: ColumnDef<T>;
 }
 function DataTableHeadCell<T>(props: DataTableHeadCellProps<T>) {
-  const { def } = props;
+  const { def, className } = props;
 
   return (
-    <td data-component="DataTableHeadCell" {...def.headCellProps}>
+    <td
+      data-component="DataTableHeadCell"
+      className={clsx(styles.DataTableHeadCell, className)}
+      {...def.headCellProps}
+    >
       {def.title ?? def.valueKey}
     </td>
   );
 }
 
-interface DataTableBodyCellProps<T> {
+interface DataTableBodyCellProps<T>
+  extends HTMLAttributes<HTMLTableCellElement> {
   /** Определение колонки (свойства колонки) */
   def: ColumnDef<T>;
   /** Данные строки таблицы */
@@ -69,14 +94,22 @@ interface DataTableBodyCellProps<T> {
 }
 
 function DataTableBodyCell<T>(props: DataTableBodyCellProps<T>) {
-  const { def, item, index } = props;
+  const { def, item, index, className } = props;
 
-  if (def.render) {
+  const withWrapper = (element: ReactNode) => {
     return (
-      <td data-component="DataTableBodyCell" {...def.bodyCellProps}>
-        {def.render(props.item, index)}
+      <td
+        data-component="DataTableBodyCell"
+        className={clsx(styles.DataTableBodyCell, className)}
+        {...def.bodyCellProps}
+      >
+        {element}
       </td>
     );
+  };
+
+  if (def.render) {
+    return withWrapper(def.render(props.item, index));
   }
 
   const value = def.valueKey && getValueFromObject(item, def.valueKey);
@@ -87,11 +120,7 @@ function DataTableBodyCell<T>(props: DataTableBodyCellProps<T>) {
     typeof value === "string" ||
     typeof value === "number"
   ) {
-    return (
-      <td data-component="DataTableBodyCell" {...def.bodyCellProps}>
-        {value}
-      </td>
-    );
+    return withWrapper(value);
   }
 }
 

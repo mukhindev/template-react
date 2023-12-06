@@ -17,7 +17,6 @@ export interface CellProps extends HTMLAttributes<HTMLDivElement> {
   columns?: number;
   /** Число на сколько строк сетки расширяться. -1 = на всю высоту */
   rows?: number;
-  "data-component"?: string;
 }
 
 /** Ячейка сетки */
@@ -64,8 +63,8 @@ export default forwardRef(function Cell(
   return (
     <div
       data-component={!dataComponent ? "Cell" : `Cell/${dataComponent}`}
-      ref={ref}
       className={clsx(styles.Cell, className)}
+      ref={ref}
       style={{
         "--grid-column": gridColumn,
         "--grid-row": gridRow,

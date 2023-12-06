@@ -2,10 +2,20 @@ import DataTable from "~/shared/ui/DataTable";
 import styles from "./App.module.scss";
 
 const orders = [
-  { id: "1", user: { firstName: "Sergey", lastName: "Mukhin" }, total: 1000 },
+  {
+    id: "1",
+    user: {
+      firstName: "Sergey",
+      lastName: "Mukhin",
+    },
+    total: 1000,
+  },
   {
     id: "2",
-    user: { firstName: "Ira", lastName: "Pivovarova" },
+    user: {
+      firstName: "Ira",
+      lastName: "Pivovarova",
+    },
     total: 888,
   },
 ];
