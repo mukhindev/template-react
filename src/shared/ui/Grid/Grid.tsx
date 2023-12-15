@@ -27,7 +27,6 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   rows?: number;
   /** Размер промежутков сетки */
   gap?: number | string;
-  "data-component"?: string;
 }
 
 /** Сетка с колонками (x) и строками (y) */
@@ -35,16 +34,7 @@ export default forwardRef(function Grid(
   props: GridProps,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const {
-    columns,
-    rows,
-    children,
-    gap,
-    className,
-    style,
-    "data-component": dataComponent,
-    ...divProps
-  } = props;
+  const { columns, rows, children, gap, className, style, ...divProps } = props;
 
   const templateColumns =
     columns !== undefined ? `repeat(${columns}, 1fr)` : undefined;
@@ -53,7 +43,10 @@ export default forwardRef(function Grid(
 
   return (
     <div
-      data-component={!dataComponent ? "Grid" : `Grid/${dataComponent}`}
+      {...divProps}
+      data-component={["Grid", props["data-component"]]
+        .filter((el) => el)
+        .join("/")}
       className={clsx(styles.Grid, className)}
       ref={ref}
       style={{
@@ -62,7 +55,6 @@ export default forwardRef(function Grid(
         "--gap": typeof gap === "number" ? `${gap}px` : gap,
         ...style,
       }}
-      {...divProps}
     >
       <GridContext.Provider
         value={{

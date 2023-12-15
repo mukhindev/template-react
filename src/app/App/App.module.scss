@@ -1,6 +1,14 @@
 .App {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 1rem;
+  flex-direction: row;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md);
+}
+
+.AppPlayground {
+  flex: 0.5;
+}
+
+.AppFormInfo {
+  flex: 0.5;
 }

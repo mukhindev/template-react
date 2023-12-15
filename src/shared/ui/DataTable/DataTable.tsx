@@ -15,13 +15,7 @@ export default forwardRef(function DataTable<T>(
   props: DataTableProps<T>,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const {
-    data = [],
-    defs = [],
-    "data-component": dataComponent,
-    className,
-    ...divProps
-  } = props;
+  const { data = [], defs = [], className, ...divProps } = props;
 
   if (!data || !defs) {
     return null;
@@ -29,10 +23,12 @@ export default forwardRef(function DataTable<T>(
 
   return (
     <div
-      data-component={!dataComponent ? "Table" : `Table/${dataComponent}`}
+      {...divProps}
+      data-component={["DataTable", props["data-component"]]
+        .filter((el) => el)
+        .join("/")}
       className={clsx(styles.DataTable, className)}
       ref={ref}
-      {...divProps}
     >
       <table className={styles.DataTableTable}>
         <thead>
@@ -75,9 +71,9 @@ function DataTableHeadCell<T>(props: DataTableHeadCellProps<T>) {
 
   return (
     <td
+      {...def.headCellProps}
       data-component="DataTableHeadCell"
       className={clsx(styles.DataTableHeadCell, className)}
-      {...def.headCellProps}
     >
       {def.title ?? def.valueKey}
     </td>
@@ -99,9 +95,9 @@ function DataTableBodyCell<T>(props: DataTableBodyCellProps<T>) {
   const withWrapper = (element: ReactNode) => {
     return (
       <td
+        {...def.bodyCellProps}
         data-component="DataTableBodyCell"
         className={clsx(styles.DataTableBodyCell, className)}
-        {...def.bodyCellProps}
       >
         {element}
       </td>

@@ -24,17 +24,8 @@ export default forwardRef(function Cell(
   props: PropsWithChildren<CellProps>,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const {
-    columns,
-    rows,
-    x,
-    y,
-    children,
-    className,
-    style,
-    "data-component": dataComponent,
-    ...divProps
-  } = props;
+  const { columns, rows, x, y, children, className, style, ...divProps } =
+    props;
 
   const { columns: gridColumns, rows: gridRows } = useGrid();
 
@@ -62,7 +53,10 @@ export default forwardRef(function Cell(
 
   return (
     <div
-      data-component={!dataComponent ? "Cell" : `Cell/${dataComponent}`}
+      {...divProps}
+      data-component={["Cell", props["data-component"]]
+        .filter((el) => el)
+        .join("/")}
       className={clsx(styles.Cell, className)}
       ref={ref}
       style={{
@@ -70,7 +64,6 @@ export default forwardRef(function Cell(
         "--grid-row": gridRow,
         ...style,
       }}
-      {...divProps}
     >
       {children}
     </div>
