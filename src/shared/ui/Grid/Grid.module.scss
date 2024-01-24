@@ -1,0 +1,9 @@
+.Grid {
+  --template-columns: unset;
+  --template-rows: unset;
+  --gap: unset;
+  display: grid;
+  grid-template-columns: var(--template-columns);
+  grid-template-rows: var(--template-rows);
+  gap: var(--gap);
+}
