@@ -1,16 +1,23 @@
 import { useState } from "react";
+import { clsx } from "clsx";
 import Form, { SubmitHandler } from "~/shared/ui/Form";
 import FormInteger from "~/shared/ui/Form/controls/FormInteger";
 import FormReset from "~/shared/ui/Form/controls/FormReset";
 import FormSubmit from "~/shared/ui/Form/controls/FormSubmit";
 import FormText from "~/shared/ui/Form/controls/FormText";
-import { clsx } from "clsx";
+import Grid, { Cell } from "~/shared/ui/Grid";
+import FormInfo from "./components/FormInfo";
 import styles from "./Playground.module.scss";
+import { css } from "@emotion/react";
 
 const DATA = {
   firstName: "Sergey",
   age: 37,
 };
+
+const c = (size: "lg") => css`
+  margin-left: var(--spacing-${size});
+`;
 
 type DataModel = Partial<typeof DATA>;
 
@@ -38,10 +45,21 @@ export default function Playground(props: PlaygroundProps) {
       data={externalData}
       onSubmit={handleSubmit}
     >
-      <FormText<DataModel> label="Имя" property="firstName" />
-      <FormInteger<DataModel> property="age" />
-      <FormReset>Сбросить</FormReset>
-      <FormSubmit>Сохранить</FormSubmit>
+      <div className={styles.PlaygroundColumns}>
+        <Grid columns={2} gap={"var(--spacing-md)"}>
+          <Cell className={styles.PlaygroundFormHeader} columns={-1}>
+            <FormReset>Сбросить</FormReset>
+            <FormSubmit>Сохранить</FormSubmit>
+          </Cell>
+          <Cell css={c("lg")}>
+            <FormText<DataModel> label="Имя" property="firstName" />
+          </Cell>
+          <Cell>
+            <FormInteger<DataModel> property="age" />
+          </Cell>
+        </Grid>
+        <FormInfo />
+      </div>
     </Form>
   );
 }

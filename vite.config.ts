@@ -32,7 +32,9 @@ export default defineConfig((config) => {
         "{buildDate}": `<!-- build date: ${new Date().toISOString()} -->`,
       }),
       svgr(),
-      react(),
+      react({
+        jsxImportSource: "@emotion/react",
+      }),
     ],
     resolve: { alias: prepareAliases(ALIAS) },
     test: {
