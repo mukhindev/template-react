@@ -1,8 +1,8 @@
 import { defineConfig, loadEnv } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 import svgr from "vite-plugin-svgr";
-import { htmlTransformer } from "./vite-utils/htmlTransformer";
 import { prepareDefine } from "./vite-utils/prepareDefine";
+import { htmlTransformer } from "./vite-utils/htmlTransformer";
 import { prepareAliases } from "./vite-utils/prepareAliases";
 
 const PORT = 3000;
@@ -10,6 +10,7 @@ const ALIAS = { "~": "src" };
 const REQUIRED_ENV_VARIABLES: string[] = [];
 const ENV_VARIABLES: string[] = ["API_HOST"];
 
+// https://vitejs.dev/config/
 export default defineConfig((config) => {
   const { mode } = config;
 
